@@ -1,0 +1,66 @@
+## QUESTION 1
+CREATE KEYSPACE MBT_RETAIL_DB_STET WITH replication = {'class':'SimpleStrategy','replication_factor':1};
+
+## QUESTION 2
+CREATE TABLE Products(product_code uuid PRIMARY KEY,product_description text,product_category_subcategory map<text, text>,product_cost decimal,product_price list<decimal>);
+
+## QUESTION 3
+BEGIN BATCH
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)
+VALUES (uuid(), 'TV', {'Category':'Household', 'SubCategory':'Electronics'}, 3000, [3500, 3200]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'blender', {'Category':'Household', 'SubCategory':'Electronics'}, 3500, [4100, 3800]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'Dishwasher', {'Category':'Household', 'SubCategory':'Electronics'}, 2000, [2500, 2200]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'hosepipe', {'Category':'Agricultural', 'SubCategory':'Garden'}, 400, [500, 350]);
+2 / 4
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'Garden Tools', {'Category':'Agricultural', 'SubCategory':'Garden'}, 600, [680, 590]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'Jacket', {'Category':'Clothing', 'SubCategory':'Babywear'}, 1400, [1700, 1500]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'MinnieT-shirt', {'Category':'Clothing', 'SubCategory':'Babywear'}, 800, [900, 850]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'Jeans', {'Category':'Clothing', 'SubCategory':'Babywear'}, 1000, [1200, 1100]);
+INSERT INTO Products (product_code, product_description, product_category_subcategory, product_cost, product_price)  
+VALUES (uuid(), 'bottle', {'Category':'Clothing', 'SubCategory':'Babywear'}, 400, [500, 450]);
+APPLY BATCH;
+SELECT*FROM Products;
+
+product_code                         | product_category_subcategory                      
+     | product_cost | product_description | product_price
+--------------------------------------+---------------------------------------------------------+--------------+---------------------+---------------
+7c597bae-cbd4-4fe0-9a64-0d6a21fec72c | {'Category': 'Household', 'SubCategory': 'Electronics'} |         2000 |          Dishwasher |  [2500, 2200]
+59315e93-4fb9-4aa4-80c5-351594a0ab48 |     {'Category': 'Clothing', 'SubCategory': 'Babywear'} |         1400 |              Jacket |  [1700, 1500]
+3 / 4
+f6f51538-9aba-493d-8ea7-6990d80ae61f |     {'Category': 'Clothing', 'SubCategory': 'Babywear'} |         1000 |               Jeans |  [1200, 1100]
+930f1b2d-9275-44ef-9e9f-ab631ed68357 |     {'Category': 'Clothing', 'SubCategory': 'Babywear'} |          400 |              bottle |    [500, 450]
+387560fe-1f4e-4178-aa4b-40eb64349795 | {'Category': 'Household', 'SubCategory': 'Electronics'} |         3500 |             blender |  [4100, 3800]
+ab867d02-7490-405c-801a-b41d642d8b53 |     {'Category': 'Clothing', 'SubCategory': 'Babywear'} |          800 |       MinnieT-shirt |    [900, 850]
+d27f7063-62cc-4d12-89cf-41ba217af109 | {'Category': 'Household', 'SubCategory': 'Electronics'} |         3000 |                  TV |  [3500, 3200]
+17431e4e-dfd1-4395-911d-381927d8264b |   {'Category': 'Agricultural', 'SubCategory': 'Garden'} |          400 |            hosepipe |    [500, 350]
+6d07463f-2c89-43a5-b75d-6d54f55a3f9d |   {'Category': 'Agricultural', 'SubCategory': 'Garden'} |          600 |        Garden Tools |    [680, 590]
+
+(9 rows)
+QUESTION 4(SEE TABLE ABOVE)
+SELECT*FROM PRODUCTS;
+## QUESTION 5
+CREATE INDEX ON Products (product_price);
+SELECT * FROM Products  
+WHERE product_category=subcategory['SubCategory'] = 'Garden';
+## QUESTION 6
+UPDATE Products SET product_price = [1836, 1620] WHERE product_code f6f51538-9aba-493d-8ea7-6990d80ae61f ;
+UPDATE Products  
+SET product_price = [972, 918]  
+WHERE product_code = d27f7063-62cc-4d12-89cf-41ba217af109;
+UPDATE Products  
+SET product_price = [1296, 1188]  
+4 / 4
+WHERE product_code = 930f1b2d-9275-44ef-9e9f-ab631ed68357;
+UPDATE Products  
+SET product_price = [540, 486]  
+WHERE product_code =387560fe-1f4e-4178-aa4b-40eb64349795  ;
+## QUESTION 7
+SELECT FROM WHERE product_price CONTAINS 900;
+
