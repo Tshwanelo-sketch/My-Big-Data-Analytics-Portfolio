@@ -25,7 +25,6 @@ With proficiency in **Excel, Power BI, SQL, Python, Cassandra, Azure, and Apache
 ---
 
 ### 📫 Contact Information  
-📧 **Email:** [tshwanelomabote9@gmail.com](mailto:tshwanelomabote9@gmail.com)  
-🌐 **LinkedIn:** [Add your LinkedIn profile link here]  
+📧 **Email:** [tshwanelomabote9@gmail.com](mailto:tshwanelomabote9@gmail.com)   
 
 ---
